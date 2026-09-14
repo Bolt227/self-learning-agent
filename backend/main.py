@@ -1,59 +1,85 @@
-import json
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-from backend.memory.memory_store import save_memory
-from backend.retrieval.contextual_retrieval import search_memories_contextually
-
-SCENARIO_FILE = "evaluations/scenarios.json"
-OUTPUT_FILE = "evaluations/retrieval_results.json"
+from backend.agent.orchestrator import run_workflow
+from backend.memory.memory_extractor import extract_memory
+from backend.memory.memory_manager import MemoryManager
 
 
-def run_scenario(scenario):
-    user_id = f"retrieval_{scenario['id']}"
+app = FastAPI(title="Self-Learning Agent")
 
-    for memory in scenario["memories"]:
-        save_memory(user_id, memory)
+sessions = {}
+memory_manager = MemoryManager()
 
-    retrieved = search_memories_contextually(
-        user_id,
-        scenario["query"]
-    )
 
+class ChatRequest(BaseModel):
+    user_id: str = "demo_user"
+    session_id: str
+    message: str
+
+
+class ChatResponse(BaseModel):
+    response: str
+
+
+@app.get("/")
+def root():
     return {
-        "id": scenario["id"],
-        "description": scenario["description"],
-        "query": scenario["query"],
-        "expected": scenario["expected"],
-        "retrieved_memories": retrieved
+        "status": "online",
+        "service": "self-learning-agent"
     }
 
 
-def main():
-    with open(SCENARIO_FILE, "r") as file:
-        scenarios = json.load(file)
-
-    results = []
-
-    for scenario in scenarios:
-        print(f"\nRunning {scenario['id']}...")
-
-        result = run_scenario(scenario)
-
-        results.append(result)
-
-        print("Expected:", result["expected"])
-        print("Retrieved:")
-
-        for memory in result["retrieved_memories"]:
-            print(
-                f"- {memory.get('content')} "
-                f"[scope={memory.get('scope')}]"
-            )
-
-    with open(OUTPUT_FILE, "w") as file:
-        json.dump(results, file, indent=4)
-
-    print(f"\nSaved results to {OUTPUT_FILE}")
+@app.get("/memories/{user_id}")
+def get_memories(user_id: str):
+    return {
+        "user_id": user_id,
+        "memories": memory_manager.get_l2(user_id)
+    }
 
 
-if __name__ == "__main__":
-    main()
+@app.post("/chat", response_model=ChatResponse)
+def chat(request: ChatRequest):
+
+    if request.session_id not in sessions:
+        sessions[request.session_id] = []
+
+    session_messages = sessions[request.session_id]
+
+    session_messages.append({
+        "role": "user",
+        "content": request.message
+    })
+
+    memory_result = extract_memory(request.message)
+
+    if memory_result.get("should_remember"):
+
+        memory_manager.add_l2(
+            request.user_id,
+            {
+                "content": memory_result["content"],
+                "type": memory_result["type"],
+                "scope": memory_result["scope"],
+                "importance": memory_result["importance"],
+                "source": request.message
+            }
+        )
+
+    state = {
+        "user_id": request.user_id,
+        "session_id": request.session_id,
+        "message": request.message,
+        "messages": memory_manager.get_l1(session_messages)
+    }
+
+    state = run_workflow(state)
+
+    response = state["response"]
+
+    session_messages.append({
+        "role": "assistant",
+        "content": response
+    })
+
+    return ChatResponse(response=response)
