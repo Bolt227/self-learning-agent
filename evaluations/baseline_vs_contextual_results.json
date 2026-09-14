@@ -1,0 +1,236 @@
+{
+    "results": [
+        {
+            "id": "memory_scope_01",
+            "description": "Specific preference should override general preference",
+            "query": "Give me a competitive programming solution for a binary search problem.",
+            "expected_memory": "User prefers Java for competitive programming.",
+            "baseline": [
+                {
+                    "content": "User prefers Java for competitive programming.",
+                    "type": "preference",
+                    "scope": "competitive programming",
+                    "importance": 0.9
+                }
+            ],
+            "contextual": [
+                {
+                    "content": "User prefers Java for competitive programming.",
+                    "type": "preference",
+                    "scope": "competitive programming",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_scope_02",
+            "description": "General preference should apply when no specific scope exists",
+            "query": "Write a small script to rename files in a folder.",
+            "expected_memory": "User generally prefers Python.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User generally prefers Python.",
+                    "type": "preference",
+                    "scope": "general",
+                    "importance": 0.7
+                }
+            ]
+        },
+        {
+            "id": "memory_retrieval_01",
+            "description": "Indirect reference to competitive programming should retrieve the relevant preference",
+            "query": "I'm solving a Codeforces problem. Give me a solution.",
+            "expected_memory": "User prefers Java for competitive programming.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User prefers Java for competitive programming.",
+                    "type": "preference",
+                    "scope": "competitive programming",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_retrieval_02",
+            "description": "Another indirect competitive programming reference",
+            "query": "I need to submit my solution to LeetCode.",
+            "expected_memory": "User prefers Java for competitive programming.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User prefers Java for competitive programming.",
+                    "type": "preference",
+                    "scope": "competitive programming",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_relevance_01",
+            "description": "Unrelated memories should not influence the response",
+            "query": "Explain what a binary search tree is.",
+            "expected_memory": null,
+            "baseline": [],
+            "contextual": []
+        },
+        {
+            "id": "memory_relevance_02",
+            "description": "Technical question should not retrieve unrelated personal interests",
+            "query": "What is a binary tree?",
+            "expected_memory": null,
+            "baseline": [],
+            "contextual": []
+        },
+        {
+            "id": "memory_type_01",
+            "description": "A stored goal should be relevant to project planning",
+            "query": "What kind of project should I work on to support my goal?",
+            "expected_memory": "User's goal is to build a strong AI and machine learning profile.",
+            "baseline": [
+                {
+                    "content": "User's goal is to build a strong AI and machine learning profile.",
+                    "type": "goal",
+                    "scope": "career and projects",
+                    "importance": 0.9
+                }
+            ],
+            "contextual": [
+                {
+                    "content": "User's goal is to build a strong AI and machine learning profile.",
+                    "type": "goal",
+                    "scope": "career and projects",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_type_02",
+            "description": "A stored skill should be relevant to technical recommendations",
+            "query": "What language would be suitable for a small automation script?",
+            "expected_memory": "User has experience with Python.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User has experience with Python.",
+                    "type": "skill",
+                    "scope": "programming",
+                    "importance": 0.8
+                }
+            ]
+        },
+        {
+            "id": "memory_scope_03",
+            "description": "A specific project preference should override a general preference",
+            "query": "I'm building a backend API. What framework should I use?",
+            "expected_memory": "User prefers FastAPI for backend projects.",
+            "baseline": [
+                {
+                    "content": "User prefers FastAPI for backend projects.",
+                    "type": "preference",
+                    "scope": "backend development",
+                    "importance": 0.9
+                }
+            ],
+            "contextual": [
+                {
+                    "content": "User prefers FastAPI for backend projects.",
+                    "type": "preference",
+                    "scope": "backend development",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_retrieval_03",
+            "description": "Framework context should retrieve a backend preference",
+            "query": "I need to create a REST API in Python.",
+            "expected_memory": "User prefers FastAPI for backend projects.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User prefers FastAPI for backend projects.",
+                    "type": "preference",
+                    "scope": "backend development",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_conflict_01",
+            "description": "More specific preference should win when preferences conflict",
+            "query": "Help me solve a CodeChef contest problem.",
+            "expected_memory": "User prefers Java for competitive programming.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User prefers Java for competitive programming.",
+                    "type": "preference",
+                    "scope": "competitive programming",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_no_match_01",
+            "description": "Memory should not be retrieved when the query has no meaningful relationship",
+            "query": "What is photosynthesis?",
+            "expected_memory": null,
+            "baseline": [],
+            "contextual": []
+        },
+        {
+            "id": "memory_scope_04",
+            "description": "Machine learning context should retrieve an AI/ML interest",
+            "query": "What should I learn about neural networks?",
+            "expected_memory": "User is interested in machine learning.",
+            "baseline": [],
+            "contextual": [
+                {
+                    "content": "User is interested in machine learning.",
+                    "type": "interest",
+                    "scope": "machine learning",
+                    "importance": 0.8
+                }
+            ]
+        },
+        {
+            "id": "memory_scope_05",
+            "description": "Career context should retrieve a relevant long-term goal",
+            "query": "What should I build for my career portfolio?",
+            "expected_memory": "User wants to build a strong AI and machine learning profile.",
+            "baseline": [
+                {
+                    "content": "User wants to build a strong AI and machine learning profile.",
+                    "type": "goal",
+                    "scope": "career and projects",
+                    "importance": 0.9
+                }
+            ],
+            "contextual": [
+                {
+                    "content": "User wants to build a strong AI and machine learning profile.",
+                    "type": "goal",
+                    "scope": "career and projects",
+                    "importance": 0.9
+                }
+            ]
+        },
+        {
+            "id": "memory_relevance_03",
+            "description": "General technical information should remain independent of unrelated preferences",
+            "query": "Explain how a hash table works.",
+            "expected_memory": null,
+            "baseline": [],
+            "contextual": []
+        }
+    ],
+    "metrics": {
+        "total_scenarios": 15,
+        "baseline_correct": 8,
+        "contextual_correct": 15,
+        "baseline_success_rate": 53.33,
+        "contextual_success_rate": 100.0
+    }
+}

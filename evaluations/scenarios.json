@@ -1,0 +1,290 @@
+[
+    {
+        "id": "memory_scope_01",
+        "description": "Specific preference should override general preference",
+        "memories": [
+            {
+                "content": "User generally prefers Python.",
+                "type": "preference",
+                "scope": "general",
+                "importance": 0.7
+            },
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ],
+        "query": "Give me a competitive programming solution for a binary search problem.",
+        "expected_memory": "User prefers Java for competitive programming."
+    },
+    {
+        "id": "memory_scope_02",
+        "description": "General preference should apply when no specific scope exists",
+        "memories": [
+            {
+                "content": "User generally prefers Python.",
+                "type": "preference",
+                "scope": "general",
+                "importance": 0.7
+            },
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ],
+        "query": "Write a small script to rename files in a folder.",
+        "expected_memory": "User generally prefers Python."
+    },
+    {
+        "id": "memory_retrieval_01",
+        "description": "Indirect reference to competitive programming should retrieve the relevant preference",
+        "memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            },
+            {
+                "content": "User generally prefers Python.",
+                "type": "preference",
+                "scope": "general",
+                "importance": 0.7
+            }
+        ],
+        "query": "I'm solving a Codeforces problem. Give me a solution.",
+        "expected_memory": "User prefers Java for competitive programming."
+    },
+    {
+        "id": "memory_retrieval_02",
+        "description": "Another indirect competitive programming reference",
+        "memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            },
+            {
+                "content": "User likes watching cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.4
+            }
+        ],
+        "query": "I need to submit my solution to LeetCode.",
+        "expected_memory": "User prefers Java for competitive programming."
+    },
+    {
+        "id": "memory_relevance_01",
+        "description": "Unrelated memories should not influence the response",
+        "memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            },
+            {
+                "content": "User likes playing cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.4
+            },
+            {
+                "content": "User is interested in machine learning.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.6
+            }
+        ],
+        "query": "Explain what a binary search tree is.",
+        "expected_memory": null
+    },
+    {
+        "id": "memory_relevance_02",
+        "description": "Technical question should not retrieve unrelated personal interests",
+        "memories": [
+            {
+                "content": "User enjoys playing cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.5
+            },
+            {
+                "content": "User likes watching movies.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.4
+            }
+        ],
+        "query": "What is a binary tree?",
+        "expected_memory": null
+    },
+    {
+        "id": "memory_type_01",
+        "description": "A stored goal should be relevant to project planning",
+        "memories": [
+            {
+                "content": "User's goal is to build a strong AI and machine learning profile.",
+                "type": "goal",
+                "scope": "career and projects",
+                "importance": 0.9
+            }
+        ],
+        "query": "What kind of project should I work on to support my goal?",
+        "expected_memory": "User's goal is to build a strong AI and machine learning profile."
+    },
+    {
+        "id": "memory_type_02",
+        "description": "A stored skill should be relevant to technical recommendations",
+        "memories": [
+            {
+                "content": "User has experience with Python.",
+                "type": "skill",
+                "scope": "programming",
+                "importance": 0.8
+            }
+        ],
+        "query": "What language would be suitable for a small automation script?",
+        "expected_memory": "User has experience with Python."
+    },
+    {
+        "id": "memory_scope_03",
+        "description": "A specific project preference should override a general preference",
+        "memories": [
+            {
+                "content": "User generally prefers simple implementations.",
+                "type": "preference",
+                "scope": "general",
+                "importance": 0.6
+            },
+            {
+                "content": "User prefers FastAPI for backend projects.",
+                "type": "preference",
+                "scope": "backend development",
+                "importance": 0.9
+            }
+        ],
+        "query": "I'm building a backend API. What framework should I use?",
+        "expected_memory": "User prefers FastAPI for backend projects."
+    },
+    {
+        "id": "memory_retrieval_03",
+        "description": "Framework context should retrieve a backend preference",
+        "memories": [
+            {
+                "content": "User prefers FastAPI for backend projects.",
+                "type": "preference",
+                "scope": "backend development",
+                "importance": 0.9
+            },
+            {
+                "content": "User enjoys cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.3
+            }
+        ],
+        "query": "I need to create a REST API in Python.",
+        "expected_memory": "User prefers FastAPI for backend projects."
+    },
+    {
+        "id": "memory_conflict_01",
+        "description": "More specific preference should win when preferences conflict",
+        "memories": [
+            {
+                "content": "User prefers Python for programming.",
+                "type": "preference",
+                "scope": "programming",
+                "importance": 0.7
+            },
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ],
+        "query": "Help me solve a CodeChef contest problem.",
+        "expected_memory": "User prefers Java for competitive programming."
+    },
+    {
+        "id": "memory_no_match_01",
+        "description": "Memory should not be retrieved when the query has no meaningful relationship",
+        "memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ],
+        "query": "What is photosynthesis?",
+        "expected_memory": null
+    },
+    {
+        "id": "memory_scope_04",
+        "description": "Machine learning context should retrieve an AI/ML interest",
+        "memories": [
+            {
+                "content": "User is interested in machine learning.",
+                "type": "interest",
+                "scope": "machine learning",
+                "importance": 0.8
+            },
+            {
+                "content": "User likes playing cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.4
+            }
+        ],
+        "query": "What should I learn about neural networks?",
+        "expected_memory": "User is interested in machine learning."
+    },
+    {
+        "id": "memory_scope_05",
+        "description": "Career context should retrieve a relevant long-term goal",
+        "memories": [
+            {
+                "content": "User wants to build a strong AI and machine learning profile.",
+                "type": "goal",
+                "scope": "career and projects",
+                "importance": 0.9
+            },
+            {
+                "content": "User enjoys watching cricket.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.3
+            }
+        ],
+        "query": "What should I build for my career portfolio?",
+        "expected_memory": "User wants to build a strong AI and machine learning profile."
+    },
+    {
+        "id": "memory_relevance_03",
+        "description": "General technical information should remain independent of unrelated preferences",
+        "memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            },
+            {
+                "content": "User is interested in machine learning.",
+                "type": "interest",
+                "scope": "general",
+                "importance": 0.6
+            }
+        ],
+        "query": "Explain how a hash table works.",
+        "expected_memory": null
+    }
+]

@@ -4,44 +4,62 @@
         "description": "Specific preference should override general preference",
         "query": "Give me a competitive programming solution for a binary search problem.",
         "expected": "Java",
-        "response": "",
-        "status": "failed",
-        "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/chat"
+        "retrieved_memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ]
     },
     {
         "id": "memory_scope_02",
         "description": "General preference should apply when no specific scope exists",
         "query": "Write a small script to rename files in a folder.",
         "expected": "Python",
-        "response": "",
-        "status": "failed",
-        "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/chat"
+        "retrieved_memories": [
+            {
+                "content": "User generally prefers Python.",
+                "type": "preference",
+                "scope": "general",
+                "importance": 0.7
+            }
+        ]
     },
     {
         "id": "memory_retrieval_01",
         "description": "Contextually relevant memory should be retrieved even when the exact preference words are absent",
         "query": "I'm solving a Codeforces problem. Give me a solution.",
         "expected": "Java",
-        "response": "",
-        "status": "failed",
-        "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/chat"
+        "retrieved_memories": [
+            {
+                "content": "User prefers Java for competitive programming.",
+                "type": "preference",
+                "scope": "competitive programming",
+                "importance": 0.9
+            }
+        ]
     },
     {
         "id": "memory_relevance_01",
         "description": "Unrelated memories should not influence the response",
         "query": "Explain what a binary search tree is.",
         "expected": "Correct explanation without irrelevant personal preferences",
-        "response": "",
-        "status": "failed",
-        "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/chat"
+        "retrieved_memories": []
     },
     {
         "id": "memory_type_01",
         "description": "A stored goal should be relevant to planning",
         "query": "What kind of project should I work on to support my goal?",
         "expected": "Response should consider the AI/ML goal",
-        "response": "",
-        "status": "failed",
-        "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/chat"
+        "retrieved_memories": [
+            {
+                "content": "User's goal is to build a strong AI and machine learning profile.",
+                "type": "goal",
+                "scope": "career and projects",
+                "importance": 0.9
+            }
+        ]
     }
 ]
