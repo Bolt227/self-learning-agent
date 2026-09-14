@@ -1,9 +1,12 @@
+import time
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from backend.agent.orchestrator import run_workflow
 from backend.memory.memory_extractor import extract_memory
 from backend.memory.memory_manager import MemoryManager
+from backend.evaluation.prism import send_trace
 
 
 app = FastAPI(title="Self-Learning Agent")
@@ -40,7 +43,6 @@ def get_memories(user_id: str):
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
-
     if request.session_id not in sessions:
         sessions[request.session_id] = []
 
@@ -54,7 +56,6 @@ def chat(request: ChatRequest):
     memory_result = extract_memory(request.message)
 
     if memory_result.get("should_remember"):
-
         memory_manager.add_l2(
             request.user_id,
             {
@@ -66,6 +67,8 @@ def chat(request: ChatRequest):
             }
         )
 
+    start_time = time.perf_counter()
+
     state = {
         "user_id": request.user_id,
         "session_id": request.session_id,
@@ -76,6 +79,23 @@ def chat(request: ChatRequest):
     state = run_workflow(state)
 
     response = state["response"]
+
+    latency_ms = int(
+        (time.perf_counter() - start_time) * 1000
+    )
+
+    send_trace(
+        input_message=request.message,
+        output_message=response,
+        latency_ms=latency_ms,
+        session_id=request.session_id,
+        user_id=request.user_id,
+        metadata={
+            "agent_version": "baseline-contextual",
+            "memory_enabled": True,
+            "retrieval": "contextual"
+        }
+    )
 
     session_messages.append({
         "role": "assistant",

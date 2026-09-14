@@ -14,11 +14,9 @@ class AgentState(TypedDict, total=False):
     tool_calls: list[dict[str, Any]]
     tool_results: list[dict[str, Any]]
 
-    response: str
-
-    context_type: str
     needs_memory: bool
     needs_rag: bool
     needs_tool: bool
 
+    response: str
     error: str

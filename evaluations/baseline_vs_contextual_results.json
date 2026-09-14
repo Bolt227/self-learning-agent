@@ -10,7 +10,9 @@
                     "content": "User prefers Java for competitive programming.",
                     "type": "preference",
                     "scope": "competitive programming",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.132820+00:00",
+                    "last_used_at": null
                 }
             ],
             "contextual": [
@@ -18,7 +20,9 @@
                     "content": "User prefers Java for competitive programming.",
                     "type": "preference",
                     "scope": "competitive programming",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.133406+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.817732+00:00"
                 }
             ]
         },
@@ -33,7 +37,9 @@
                     "content": "User generally prefers Python.",
                     "type": "preference",
                     "scope": "general",
-                    "importance": 0.7
+                    "importance": 0.7,
+                    "updated_at": "2026-09-14T16:14:05.135287+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.820207+00:00"
                 }
             ]
         },
@@ -48,7 +54,9 @@
                     "content": "User prefers Java for competitive programming.",
                     "type": "preference",
                     "scope": "competitive programming",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.138282+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.822780+00:00"
                 }
             ]
         },
@@ -63,7 +71,9 @@
                     "content": "User prefers Java for competitive programming.",
                     "type": "preference",
                     "scope": "competitive programming",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.140921+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.825178+00:00"
                 }
             ]
         },
@@ -93,7 +103,9 @@
                     "content": "User's goal is to build a strong AI and machine learning profile.",
                     "type": "goal",
                     "scope": "career and projects",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.148185+00:00",
+                    "last_used_at": null
                 }
             ],
             "contextual": [
@@ -101,7 +113,9 @@
                     "content": "User's goal is to build a strong AI and machine learning profile.",
                     "type": "goal",
                     "scope": "career and projects",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.148725+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.831601+00:00"
                 }
             ]
         },
@@ -116,7 +130,9 @@
                     "content": "User has experience with Python.",
                     "type": "skill",
                     "scope": "programming",
-                    "importance": 0.8
+                    "importance": 0.8,
+                    "updated_at": "2026-09-14T16:14:05.150501+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.833193+00:00"
                 }
             ]
         },
@@ -130,7 +146,9 @@
                     "content": "User prefers FastAPI for backend projects.",
                     "type": "preference",
                     "scope": "backend development",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.152654+00:00",
+                    "last_used_at": null
                 }
             ],
             "contextual": [
@@ -138,7 +156,9 @@
                     "content": "User prefers FastAPI for backend projects.",
                     "type": "preference",
                     "scope": "backend development",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.153168+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.835785+00:00"
                 }
             ]
         },
@@ -153,7 +173,9 @@
                     "content": "User prefers FastAPI for backend projects.",
                     "type": "preference",
                     "scope": "backend development",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.154795+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.838280+00:00"
                 }
             ]
         },
@@ -168,7 +190,9 @@
                     "content": "User prefers Java for competitive programming.",
                     "type": "preference",
                     "scope": "competitive programming",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.158194+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.840667+00:00"
                 }
             ]
         },
@@ -191,7 +215,9 @@
                     "content": "User is interested in machine learning.",
                     "type": "interest",
                     "scope": "machine learning",
-                    "importance": 0.8
+                    "importance": 0.8,
+                    "updated_at": "2026-09-14T16:14:05.160974+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.844358+00:00"
                 }
             ]
         },
@@ -205,7 +231,9 @@
                     "content": "User wants to build a strong AI and machine learning profile.",
                     "type": "goal",
                     "scope": "career and projects",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.163106+00:00",
+                    "last_used_at": null
                 }
             ],
             "contextual": [
@@ -213,7 +241,9 @@
                     "content": "User wants to build a strong AI and machine learning profile.",
                     "type": "goal",
                     "scope": "career and projects",
-                    "importance": 0.9
+                    "importance": 0.9,
+                    "updated_at": "2026-09-14T16:14:05.163566+00:00",
+                    "last_used_at": "2026-09-14T16:12:13.846921+00:00"
                 }
             ]
         },
