@@ -1,17 +1,12 @@
 import json
+from google import genai
+from google.genai import types
+from backend.config import GEMINI_API_KEY, MODEL_NAME
 
-from openai import OpenAI
+# Reuse the same Gemini client
+client = genai.Client(api_key=GEMINI_API_KEY)
 
-from backend.config import OPENAI_API_KEY, MODEL_NAME
-
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-
-def extract_memory(user_message: str):
-    response = client.responses.create(
-        model=MODEL_NAME,
-        instructions="""
-You are a memory extraction system for a personal AI assistant.
+EXTRACTION_PROMPT = """You are a memory extraction system for a personal AI assistant.
 
 Analyze the user's message and identify information that is useful
 for future conversations.
@@ -55,19 +50,49 @@ If nothing should be remembered, return:
     "scope": "",
     "importance": 0
 }
-""",
-        input=user_message
+"""
+
+_FALLBACK = {
+    "should_remember": False,
+    "content": "",
+    "type": "",
+    "scope": "",
+    "importance": 0
+}
+
+
+def extract_memory(user_message: str) -> dict:
+    """
+    Sends a user message to Gemini and extracts any long-term memory
+    worth saving about the user.
+
+    Args:
+        user_message (str): The raw message from the user.
+
+    Returns:
+        dict: A memory dict with should_remember, content, type, scope, importance.
+    """
+    if not user_message or not user_message.strip():
+        return _FALLBACK
+
+    response = client.models.generate_content(
+        model=MODEL_NAME,
+        contents=user_message,
+        config=types.GenerateContentConfig(
+            system_instruction=EXTRACTION_PROMPT
+        )
     )
 
-    text = response.output_text.strip()
+    text = response.text.strip()
+
+    # Strip markdown code fences if Gemini wraps the JSON in them
+    if text.startswith("```"):
+        text = text.split("```")[1]
+        if text.startswith("json"):
+            text = text[4:]
+        text = text.strip()
 
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        return {
-            "should_remember": False,
-            "content": "",
-            "type": "",
-            "scope": "",
-            "importance": 0
-        }
+        return _FALLBACK
