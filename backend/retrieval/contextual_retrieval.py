@@ -1,6 +1,4 @@
 from backend.memory.memory_store import load_memories, mark_memory_used
-from backend.memory.memory_scorer import score_memory, resolve_memory_conflicts
-
 
 STOP_WORDS = {
     "a",
@@ -90,15 +88,15 @@ CONTEXT_MAP = {
     ],
 
     "backend development": [
-        "backend",
-        "backend development",
-        "rest api",
-        "api",
-        "web api",
-        "fastapi",
-        "server",
-        "server side"
-    ],
+    "backend",
+    "backend development",
+    "rest api",
+    "api",
+    "web api",
+    "fastapi",
+    "server",
+    "server side"
+],
 
     "career and projects": [
         "project",
@@ -148,7 +146,6 @@ def meaningful_words(text: str):
     cleaned_words = set()
 
     for word in words:
-
         word = word.strip(".,!?;:'\"()[]{}")
 
         if word and word not in STOP_WORDS:
@@ -165,6 +162,7 @@ def search_memories_contextually(user_id: str, query: str):
         return []
 
     detected_contexts = detect_context(query)
+
     query_words = meaningful_words(query)
 
     scored_memories = []
@@ -173,6 +171,7 @@ def search_memories_contextually(user_id: str, query: str):
 
         content = memory.get("content", "").lower()
         scope = memory.get("scope", "").lower()
+        importance = float(memory.get("importance", 0))
 
         content_words = meaningful_words(content)
         scope_words = meaningful_words(scope)
@@ -180,10 +179,10 @@ def search_memories_contextually(user_id: str, query: str):
         content_overlap = len(query_words & content_words)
         scope_overlap = len(query_words & scope_words)
 
-        contextual_score = 0.0
+        score = 0.0
 
-        contextual_score += content_overlap * 2.0
-        contextual_score += scope_overlap * 3.0
+        score += content_overlap * 2.0
+        score += scope_overlap * 3.0
 
         for context in detected_contexts:
 
@@ -200,16 +199,12 @@ def search_memories_contextually(user_id: str, query: str):
             )
 
             if content_match:
-                contextual_score += 10.0
+                score += 10.0
 
             if scope_match:
-                contextual_score += 15.0
+                score += 15.0
 
-        score = score_memory(
-            memory,
-            query,
-            contextual_score
-        )
+        score += importance * 0.5
 
         if score >= 3.0:
             scored_memories.append((score, memory))
@@ -219,17 +214,7 @@ def search_memories_contextually(user_id: str, query: str):
         reverse=True
     )
 
-    memories = [
+    return [
         memory
         for score, memory in scored_memories[:5]
     ]
-
-    memories = resolve_memory_conflicts(memories)
-
-    for memory in memories:
-        mark_memory_used(
-            user_id,
-            memory.get("content", "")
-        )
-
-    return memories
